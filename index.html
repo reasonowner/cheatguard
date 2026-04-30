@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheatGuard — Anti-Cheat Screenshare Tool</title>
+    <meta name="description" content="Профессиональный набор команд PowerShell и CMD для screenshare-проверок на читы.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Noise overlay -->
+    <div class="noise"></div>
+
+    <!-- Cursor glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Particles canvas -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- ====== NAVBAR ====== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="brand">
+                <span class="brand-star">✦</span>
+                <span class="brand-name">Cheat<em>Guard</em></span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link" data-i18n="nav_home">Главная</a></li>
+                <li><a href="#commands" class="nav-link" data-i18n="nav_commands">Команды</a></li>
+                <li><a href="#artifacts" class="nav-link" data-i18n="nav_artifacts">Артефакты</a></li>
+                <li><a href="#faq" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+            </ul>
+            <div class="nav-right">
+                <!-- Language Switcher -->
+                <div class="lang-switcher" id="langSwitcher">
+                    <button class="lang-current" id="langCurrent">
+                        <span id="langFlag">🇷🇺</span>
+                        <span id="langCode">RU</span>
+                        <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button class="lang-opt active" data-lang="ru"><span>🇷🇺</span> Русский</button>
+                        <button class="lang-opt" data-lang="en"><span>🇬🇧</span> English</button>
+                        <button class="lang-opt" data-lang="pl"><span>🇵🇱</span> Polski</button>
+                    </div>
+                </div>
+                <button class="burger" id="burger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====== HERO ====== -->
+    <section class="hero" id="hero">
+        <div class="hero-center">
+            <!-- Floating card -->
+            <div class="hero-card" id="heroCard">
+                <div class="hero-card-inner">
+                    <div class="hero-card-glow"></div>
+                    <svg class="hero-card-icon" viewBox="0 0 60 60" fill="none">
+                        <path d="M30 5 L55 16 L55 34 C55 46 43 54 30 58 C17 54 5 46 5 34 L5 16 Z" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/>
+                        <path d="M22 31 L27 36 L38 25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="hero-card-label">CheatGuard</span>
+                </div>
+            </div>
+
+            <!-- Big title -->
+            <h1 class="hero-title">
+                <span class="hero-title-line" data-i18n="hero_line1">CheatGuard ✦ raises</span>
+                <span class="hero-title-line italic" data-i18n="hero_line2">the bar</span>
+            </h1>
+
+            <p class="hero-desc" data-i18n="hero_desc">
+                Профессиональный набор команд PowerShell и CMD для screenshare-проверок.<br>
+                Реестр, процессы, сеть, артефакты — всё в одном месте.
+            </p>
+
+            <div class="hero-cta">
+                <a href="#commands" class="cta-btn">
+                    <span class="cta-icon">✦</span>
+                    <span data-i18n="hero_cta">Смотреть команды</span>
+                </a>
+            </div>
+
+            <div class="hero-scroll-hint">
+                <div class="scroll-line"></div>
+            </div>
+        </div>
+
+        <!-- Floating orb -->
+        <div class="hero-orb"></div>
+    </section>
+
+    <!-- ====== STATS ====== -->
+    <section class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <span class="stat-num" id="statCmds">30+</span>
+                <span class="stat-lbl" data-i18n="stat_cmd">Команд</span>
+            </div>
+            <div class="stat-sep">✦</div>
+            <div class="stat-item">
+                <span class="stat-num">2</span>
+                <span class="stat-lbl" data-i18n="stat_shells">Оболочки</span>
+            </div>
+            <div class="stat-sep">✦</div>
+            <div class="stat-item">
+                <span class="stat-num">8</span>
+                <span class="stat-lbl" data-i18n="stat_art">Артефактов</span>
+            </div>
+            <div class="stat-sep">✦</div>
+            <div class="stat-item">
+                <span class="stat-num">3</span>
+                <span class="stat-lbl" data-i18n="stat_lang">Языка</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== COMMANDS ====== -->
+    <section class="section commands-section" id="commands">
+        <div class="container">
+            <div class="section-head">
+                <p class="section-label" data-i18n="cmd_label">— Команды</p>
+                <h2 class="section-title" data-i18n="cmd_title">PowerShell <em>&</em> CMD</h2>
+                <p class="section-sub" data-i18n="cmd_sub">Нажмите на команду, чтобы скопировать в буфер обмена</p>
+            </div>
+
+            <!-- Shell tabs -->
+            <div class="shell-tabs">
+                <button class="shell-tab active" data-shell="powershell" id="tabPS">PowerShell</button>
+                <button class="shell-tab" data-shell="cmd" id="tabCMD">CMD</button>
+            </div>
+
+            <!-- Category tabs -->
+            <div class="cat-tabs" id="catTabs">
+                <button class="cat-tab active" data-cat="all" data-i18n="cat_all">Все</button>
+                <button class="cat-tab" data-cat="process" data-i18n="cat_process">Процессы</button>
+                <button class="cat-tab" data-cat="files" data-i18n="cat_files">Файлы</button>
+                <button class="cat-tab" data-cat="network" data-i18n="cat_network">Сеть</button>
+                <button class="cat-tab" data-cat="registry" data-i18n="cat_registry">Реестр</button>
+                <button class="cat-tab" data-cat="services" data-i18n="cat_services">Службы</button>
+                <button class="cat-tab" data-cat="logs" data-i18n="cat_logs">Логи</button>
+                <button class="cat-tab" data-cat="tasks" data-i18n="cat_tasks">Задачи</button>
+            </div>
+
+            <!-- Commands list -->
+            <div class="commands-list" id="commandsList"></div>
+        </div>
+    </section>
+
+    <!-- ====== ARTIFACTS ====== -->
+    <section class="section artifacts-section" id="artifacts">
+        <div class="container">
+            <div class="section-head">
+                <p class="section-label" data-i18n="art_label">— Артефакты Windows</p>
+                <h2 class="section-title" data-i18n="art_title">Системные <em>следы</em></h2>
+                <p class="section-sub" data-i18n="art_sub">Артефакты, которые сохраняют следы даже после удаления чита</p>
+            </div>
+            <div class="artifacts-grid" id="artifactsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ====== FAQ ====== -->
+    <section class="section faq-section" id="faq">
+        <div class="container faq-container">
+            <div class="section-head">
+                <p class="section-label">— FAQ</p>
+                <h2 class="section-title" data-i18n="faq_title">Вопросы <em>&</em> ответы</h2>
+            </div>
+            <div class="faq-list" id="faqList"></div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-star">✦</span>
+                <span class="brand-name">Cheat<em>Guard</em></span>
+            </div>
+            <p class="footer-disclaimer" data-i18n="footer_disc">Только для образовательных целей и авторизованных проверок.</p>
+            <p class="footer-copy">© 2026 CheatGuard</p>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span data-i18n="toast_copied">Скопировано!</span>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
